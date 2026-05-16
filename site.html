@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creation-Ship — Relational Poetics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0c;
+    --ink:#e8e4da;
+    --dim:#8a8678;
+    --faint:#46443e;
+    --accent:#c98a4b;
+    --display:'Cormorant Garamond', Georgia, serif;
+    --body:'EB Garamond', Georgia, serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--body);
+    overflow:hidden;
+    cursor:default;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* subtle grain + vignette for atmosphere */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;z-index:50;
+    background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.55) 100%);
+  }
+  body::after{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;z-index:51;opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .deck{position:relative;height:100%;width:100%;}
+
+  .slide{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    text-align:center;
+    padding:8vh 12vw;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 1.4s ease;
+  }
+  .slide.active{
+    opacity:1;
+    visibility:visible;
+  }
+
+  /* staggered rise of lines within the active slide */
+  .slide.active .rise{
+    animation:rise 1.8s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .slide.active .rise:nth-child(2){animation-delay:.45s;}
+  .slide.active .rise:nth-child(3){animation-delay:.9s;}
+  .slide.active .rise:nth-child(4){animation-delay:1.35s;}
+  @keyframes rise{
+    from{opacity:0;transform:translateY(14px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  .kicker{
+    font-family:var(--body);
+    font-size:clamp(.7rem,1.1vw,.9rem);
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:var(--dim);
+    margin-bottom:3.5vh;
+  }
+  .kicker.asis{
+    text-transform:none;
+    letter-spacing:.28em;
+  }
+
+  .line{
+    font-family:var(--display);
+    font-weight:300;
+    line-height:1.32;
+    letter-spacing:.005em;
+    font-size:clamp(2rem,5.2vw,4.2rem);
+  }
+  .line.small{font-size:clamp(1.5rem,3.4vw,2.6rem);}
+  .line em{
+    font-style:italic;
+    color:var(--accent);
+    animation:emberglow 5.5s ease-in-out infinite;
+  }
+
+  @keyframes emberglow{
+    0%, 100%{
+      color:var(--accent);
+      text-shadow:0 0 0px rgba(201,138,75,0);
+    }
+    50%{
+      color:#e0a868;
+      text-shadow:0 0 18px rgba(201,138,75,0.45),
+                  0 0 38px rgba(201,138,75,0.18);
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .line em{animation:none;}
+  }
+
+  .attribution{
+    margin-top:5vh;
+    font-family:var(--body);
+    font-style:italic;
+    font-size:clamp(.85rem,1.4vw,1.1rem);
+    color:var(--dim);
+    letter-spacing:.02em;
+  }
+
+  /* the prompt slide — held during writing */
+  .prompt-wrap{display:flex;flex-direction:column;gap:5.5vh;}
+  .prompt-line{
+    font-family:var(--display);
+    font-weight:300;
+    font-size:clamp(1.7rem,4vw,3.1rem);
+    line-height:1.3;
+  }
+  .prompt-line .ord{
+    display:block;
+    font-family:var(--body);
+    font-size:clamp(.62rem,1vw,.78rem);
+    letter-spacing:.4em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:1.6vh;
+  }
+  .prompt-line em{font-style:italic;}
+
+  /* step slides — instruction register */
+  .step-num{
+    font-family:var(--display);
+    font-style:italic;
+    font-size:clamp(1rem,1.8vw,1.3rem);
+    color:var(--faint);
+    margin-bottom:2.6vh;
+  }
+
+  /* the silence slide */
+  .silence{
+    font-family:var(--display);
+    font-style:italic;
+    font-weight:300;
+    font-size:clamp(1.6rem,3vw,2.4rem);
+    color:var(--dim);
+    letter-spacing:.16em;
+  }
+
+  /* progress — faint, non-pressuring */
+  .progress{
+    position:fixed;
+    bottom:3.4vh;left:50%;
+    transform:translateX(-50%);
+    display:flex;gap:9px;
+    z-index:40;
+  }
+  .progress span{
+    width:5px;height:5px;border-radius:50%;
+    background:var(--faint);
+    transition:background .6s ease, transform .6s ease;
+  }
+  .progress span.on{
+    background:var(--accent);
+    transform:scale(1.35);
+  }
+
+  .hint{
+    position:fixed;
+    bottom:3vh;right:3vw;
+    font-family:var(--body);
+    font-size:.72rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--faint);
+    z-index:40;
+    transition:opacity 1.2s ease;
+  }
+  .hint.fade{opacity:0;}
+
+  .ornament{
+    color:var(--faint);
+    font-size:1.4rem;
+    margin:4vh 0;
+    letter-spacing:.5em;
+  }
+
+  /* references / QR slide */
+  .qr-card{
+    background:#f3efe4;
+    padding:22px;
+    border-radius:14px;
+    margin-bottom:3.4vh;
+    position:relative;
+    animation:halo 5.5s ease-in-out infinite;
+  }
+  .qr-card img{
+    display:block;
+    width:clamp(150px,17vw,210px);
+    height:auto;
+    image-rendering:pixelated;
+  }
+  @keyframes halo{
+    0%, 100%{
+      box-shadow:0 0 0px rgba(201,138,75,0);
+    }
+    50%{
+      box-shadow:0 0 26px rgba(201,138,75,0.5),
+                 0 0 60px rgba(201,138,75,0.22);
+    }
+  }
+  .qr-link{
+    margin-top:3vh;
+    font-family:var(--body);
+    font-size:clamp(.8rem,1.3vw,1rem);
+    letter-spacing:.06em;
+    color:var(--accent);
+    text-decoration:none;
+    border-bottom:1px solid rgba(201,138,75,0.4);
+    padding-bottom:2px;
+    transition:color .5s ease, border-color .5s ease;
+  }
+  .qr-link:hover{
+    color:#e0a868;
+    border-color:var(--accent);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .qr-card{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- 1 — holding slide -->
+  <section class="slide" data-slide>
+    <div class="kicker rise">Creation-Ship</div>
+    <div class="line rise"><em>Relational</em><br>poetics.</div>
+    <div class="attribution rise">before we make anything, together</div>
+  </section>
+
+  <!-- 2 — Lovelace -->
+  <section class="slide" data-slide>
+    <div class="kicker rise">Ada Lovelace, 1815–1852</div>
+    <div class="line small rise">She pressed her mother<br>to <em>invert the order</em> —<br>to grant her a <em>poetical science</em>.</div>
+  </section>
+
+  <!-- 3 — combining faculty -->
+  <section class="slide" data-slide>
+    <div class="line rise">She called imagination<br>a <em>combining faculty</em>.</div>
+    <div class="attribution rise">new weaves of old elements</div>
+  </section>
+
+  <!-- 4 — the trap (Benjamin) -->
+  <section class="slide" data-slide>
+    <div class="kicker rise">Ruha Benjamin</div>
+    <div class="line rise">Hype and doom —<br>two sides of the<br><em>same coin</em>.</div>
+  </section>
+
+  <!-- 5 — the frame -->
+  <section class="slide" data-slide>
+    <div class="line small rise">The trap isn't<br>picking the wrong side.</div>
+    <div class="line small rise" style="margin-top:3vh;">The trap is <em>the frame</em>.</div>
+  </section>
+
+  <!-- 6 — brown -->
+  <section class="slide" data-slide>
+    <div class="kicker asis rise">adrienne maree brown · Loving Corrections</div>
+    <div class="line small rise">The teacup is<br>already broken.</div>
+    <div class="line small rise" style="margin-top:3.4vh;">And it is not too late<br>to be in <em>right relationship</em>.</div>
+  </section>
+
+  <!-- 7 — Haudenosaunee -->
+  <section class="slide" data-slide>
+    <div class="kicker rise">The Haudenosaunee</div>
+    <div class="line small rise">Every decision, weighed<br>for the <em>seventh generation</em> —</div>
+    <div class="attribution rise">those whose faces are yet beneath the ground</div>
+  </section>
+
+  <!-- 8 — turn toward the warm-up -->
+  <section class="slide" data-slide>
+    <div class="ornament rise">· · ·</div>
+    <div class="line small rise">So, before we build —<br>one small, old thing.</div>
+  </section>
+
+  <!-- 9 — THE PROMPT (held during writing) -->
+  <section class="slide" data-slide>
+    <div class="kicker rise">On the strip of paper — two lines, no name</div>
+    <div class="prompt-wrap">
+      <div class="prompt-line rise">
+        <span class="ord">One</span>
+        Something you are nurturing<br>in your life — <em>or would like to</em>.
+      </div>
+      <div class="prompt-line rise">
+        <span class="ord">Two</span>
+        <em>How it feels to tend it.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 — fold & pool -->
+  <section class="slide" data-slide>
+    <div class="step-num rise">then</div>
+    <div class="line small rise">Fold it.<br>Let it fall into the bowl.</div>
+  </section>
+
+  <!-- 11 — draw -->
+  <section class="slide" data-slide>
+    <div class="step-num rise">then</div>
+    <div class="line small rise">Take one.</div>
+    <div class="attribution rise">if it is your own, return it, and draw again</div>
+  </section>
+
+  <!-- 12 — read aloud -->
+  <section class="slide" data-slide>
+    <div class="step-num rise">then</div>
+    <div class="line small rise">A few voices will read<br>the strip in their hands.</div>
+    <div class="attribution rise">someone else's words, carried in your voice</div>
+  </section>
+
+  <!-- 13 — silence -->
+  <section class="slide" data-slide>
+    <div class="silence rise">listen</div>
+  </section>
+
+  <!-- 14 — closing, Benjamin / Butler -->
+  <section class="slide" data-slide>
+    <div class="line small rise">It may be the end<br>of the world.</div>
+    <div class="line small rise" style="margin-top:3.4vh;">But there are<br><em>other worlds</em>.</div>
+    <div class="attribution rise">Ruha Benjamin, after Octavia E. Butler</div>
+  </section>
+
+  <!-- 15 — references / QR -->
+  <section class="slide" data-slide>
+    <div class="kicker rise">Refract</div>
+    <div class="qr-card rise">
+      <img src="data:image/png;base64,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" alt="QR code linking to the references" />
+    </div>
+    <div class="line small rise" style="font-size:clamp(1.2rem,2.4vw,1.8rem);margin-top:1vh;color:var(--accent);">Reading</div>
+    <a class="qr-link rise" href="https://burmeister-j.github.io/relational-poetics/references.pdf">burmeister-j.github.io/relational-poetics</a>
+  </section>
+
+</div>
+
+<div class="progress" id="progress"></div>
+<div class="hint" id="hint">← → to move</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('[data-slide]'));
+  const progress = document.getElementById('progress');
+  const hint = document.getElementById('hint');
+  let i = 0;
+
+  slides.forEach((_, idx) => {
+    const dot = document.createElement('span');
+    progress.appendChild(dot);
+  });
+  const dots = Array.from(progress.children);
+
+  function show(n){
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === n));
+    dots.forEach((d, idx) => d.classList.toggle('on', idx === n));
+    i = n;
+  }
+
+  function next(){ show(i + 1); }
+  function prev(){ show(i - 1); }
+
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight','ArrowDown',' ','Enter','PageDown'].includes(e.key)){ e.preventDefault(); next(); }
+    if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); prev(); }
+    if (e.key === 'Home'){ show(0); }
+    if (e.key === 'End'){ show(slides.length - 1); }
+  });
+
+  // click advances; click on left third goes back
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.clientX < window.innerWidth * 0.28) prev();
+    else next();
+  });
+
+  // fade the navigation hint after a few seconds
+  setTimeout(() => hint.classList.add('fade'), 5200);
+
+  show(0);
+</script>
+
+</body>
+</html>
