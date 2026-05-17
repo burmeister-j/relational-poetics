@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relational Poetics — Creation-Ship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0c;
+    --ink:#e8e4da;
+    --dim:#8a8678;
+    --faint:#46443e;
+    --accent:#c98a4b;
+    --rule:#26252a;
+    --display:'Cormorant Garamond', Georgia, serif;
+    --body:'EB Garamond', Georgia, serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    font-size:18px;
+  }
+  body::before{
+    content:"";
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(ellipse at 50% 0%, transparent 60%, rgba(0,0,0,0.5) 100%);
+  }
+  .wrap{
+    position:relative;z-index:1;
+    max-width:680px;margin:0 auto;
+    padding:11vh 7vw 16vh;
+  }
+
+  /* ---- masthead ---- */
+  header{text-align:center;margin-bottom:8vh;}
+  .kicker{
+    font-size:.72rem;letter-spacing:.36em;text-transform:uppercase;
+    color:var(--dim);margin-bottom:2.4vh;
+  }
+  h1{
+    font-family:var(--display);font-weight:300;
+    font-size:clamp(2.6rem,7vw,4rem);line-height:1.12;
+    letter-spacing:.01em;
+  }
+  h1 em{font-style:italic;color:var(--accent);}
+  .standfirst{
+    font-family:var(--display);font-style:italic;font-weight:300;
+    font-size:clamp(1.05rem,2.4vw,1.3rem);
+    color:var(--dim);margin-top:3vh;line-height:1.5;
+  }
+
+  /* ---- section heads ---- */
+  .section{margin-top:11vh;}
+  .section-kicker{
+    font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:1.5vh;text-align:center;
+  }
+  h2{
+    font-family:var(--display);font-weight:300;
+    font-size:clamp(1.9rem,4.5vw,2.7rem);
+    text-align:center;margin-bottom:1.4vh;
+  }
+  .section-note{
+    text-align:center;font-style:italic;color:var(--dim);
+    font-size:1rem;margin-bottom:5vh;line-height:1.5;
+  }
+  .rule{
+    width:42px;height:1px;background:var(--accent);
+    margin:3vh auto 0;opacity:.6;
+  }
+
+  /* ---- readings list ---- */
+  .ref{
+    font-size:1rem;line-height:1.55;color:#d8d3c7;
+    margin-bottom:2.4vh;padding-left:1.5em;text-indent:-1.5em;
+  }
+  .ref .author{color:var(--ink);}
+  .ref em{font-style:italic;}
+  .ref a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--faint);}
+  .ref a:hover{color:var(--accent);border-color:var(--accent);}
+
+  /* ---- weave placeholder ---- */
+  .weave-card{
+    border:.5px solid var(--rule);border-radius:12px;
+    padding:6vh 8vw;text-align:center;
+  }
+  .weave-card .glyph{
+    font-size:1.5rem;color:var(--faint);letter-spacing:.5em;
+    margin-bottom:2.5vh;
+  }
+  .weave-card p{
+    font-family:var(--display);font-style:italic;
+    font-size:1.2rem;color:var(--dim);line-height:1.5;
+  }
+  .weave-card .small{
+    font-family:var(--body);font-style:normal;
+    font-size:.85rem;letter-spacing:.04em;color:var(--faint);
+    margin-top:3vh;
+  }
+
+  footer{
+    margin-top:13vh;padding-top:4vh;
+    border-top:.5px solid var(--rule);
+    text-align:center;
+  }
+  footer .lines{
+    font-family:var(--display);font-style:italic;
+    color:var(--dim);font-size:1.05rem;line-height:1.7;
+  }
+  footer .place{
+    font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--faint);margin-top:2.5vh;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">Creation-Ship &middot; May 17, 2026</div>
+    <h1><em>Relational</em><br>Poetics</h1>
+    <p class="standfirst">A salon opening &mdash; a short practice in naming<br>what we tend, and letting it travel between us.</p>
+  </header>
+
+
+  <!-- READINGS -->
+  <section class="section" id="readings">
+    <div class="section-kicker">To sit with</div>
+    <h2>Readings</h2>
+    <p class="section-note">The corpus the salon listens with.<br>&ldquo;Reality reveals itself only to contemplative attention.&rdquo; &mdash; Byung-Chul Han</p>
+
+    <p class="ref"><span class="author">Alexander, C., Ishikawa, S., &amp; Silverstein, M.</span> (1977). <em>A pattern language: Towns, buildings, construction.</em> Oxford University Press.</p>
+    <p class="ref"><span class="author">Alexander, C.</span> (1979). <em>The timeless way of building.</em> Oxford University Press.</p>
+    <p class="ref"><span class="author">Bamil, V.</span> (2025). <em>Vibe coding: Toward an AI-native paradigm for semantic and intent-driven programming</em> [Manuscript]. Golden Gate University.</p>
+    <p class="ref"><span class="author">Benjamin, R.</span> (2019). <em>Race after technology: Abolitionist tools for the new Jim Code.</em> Polity Press.</p>
+    <p class="ref"><span class="author">Benjamin, R.</span> (2024a). <em>Imagination: A manifesto.</em> W. W. Norton.</p>
+    <p class="ref"><span class="author">Benjamin, R.</span> (2024b, October 17). The new artificial intelligentsia. <em>Los Angeles Review of Books.</em> <a href="https://lareviewofbooks.org/article/the-new-artificial-intelligentsia/">lareviewofbooks.org</a></p>
+    <p class="ref"><span class="author">Bourdon, J.</span> (2020). Telepresence, or we have always been ghosts: From Cicero to computers. In <em>Mediated presence</em> (pp. 1&ndash;18). [Book chapter].</p>
+    <p class="ref"><span class="author">brown, a. m.</span> (2017). <em>Emergent strategy: Shaping change, changing worlds.</em> AK Press.</p>
+    <p class="ref"><span class="author">brown, a. m.</span> (2024). <em>Loving corrections.</em> AK Press.</p>
+    <p class="ref"><span class="author">Clarkson, L., Morrissette, V., &amp; R&eacute;gallet, G.</span> (1992). <em>Our responsibility to the seventh generation: Indigenous peoples and sustainable development.</em> International Institute for Sustainable Development.</p>
+    <p class="ref"><span class="author">Combahee River Collective.</span> (1977). <em>The Combahee River Collective statement.</em></p>
+    <p class="ref"><span class="author">Forbes-Macphail, I.</span> (2015). &ldquo;I shall in due time be a poet&rdquo;: Ada Lovelace&rsquo;s poetical science in its literary context. In R. Hammerman &amp; A. L. Russell (Eds.), <em>Ada&rsquo;s legacy: Cultures of computing from the Victorian to the digital age.</em> Association for Computing Machinery. <a href="https://doi.org/10.1145/2809523.2809533">doi.org/10.1145/2809523.2809533</a></p>
+    <p class="ref"><span class="author">Han, B.-C.</span> (2015). <em>The burnout society</em> (E. Butler, Trans.). Stanford University Press. (Original work published 2010)</p>
+    <p class="ref"><span class="author">Han, B.-C.</span> (2024). <em>Vita contemplativa: In praise of inactivity</em> (D. Steuer, Trans.). Polity Press. (Original work published 2022)</p>
+    <p class="ref"><span class="author">Hao, K.</span> (2022, April 22). A new vision of artificial intelligence for the people. <em>MIT Technology Review.</em> <a href="https://www.technologyreview.com/2022/04/22/1050394/artificial-intelligence-for-the-people/">technologyreview.com</a></p>
+    <p class="ref"><span class="author">Hunt, R. A.</span> (n.d.). <em>What is inkshedding?</em> St. Thomas University.</p>
+    <p class="ref"><span class="author">Lewis, J. E. (Ed.).</span> (2020). <em>Indigenous protocol and artificial intelligence position paper.</em> Indigenous AI Working Group &amp; Canadian Institute for Advanced Research (CIFAR). <a href="https://www.indigenous-ai.net/position-paper">indigenous-ai.net</a></p>
+    <p class="ref"><span class="author">Stiegler, B.</span> (2017). <em>Automatic society, Volume 1: The future of work</em> (D. Ross, Trans.). Polity Press. (Original work published 2015)</p>
+
+    <div class="rule"></div>
+  </section>
+
+
+  <!-- WEAVE -->
+  <section class="section" id="weave">
+    <div class="section-kicker">Soon</div>
+    <h2>The Weave</h2>
+    <p class="section-note">The lines written in the room, gathered and braided<br>with the voices above.</p>
+    <div class="weave-card">
+      <div class="glyph">&middot; &middot; &middot;</div>
+      <p>A woven document from tonight's lines<br>will appear here in a few days.</p>
+      <p class="small">Patience is the practice. Return when it's ready.</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <p class="lines">name the thing &middot; name its feeling</p>
+    <p class="place">exteriorized &middot; witnessed-with-out &middot; reintegrated</p>
+  </footer>
+
+</div>
+</body>
+</html>
