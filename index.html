@@ -56,6 +56,25 @@
     font-size:clamp(1.05rem,2.4vw,1.3rem);
     color:var(--dim);margin-top:3vh;line-height:1.5;
   }
+  .deck-link{
+    display:inline-flex;align-items:center;gap:.55em;
+    margin-top:3.6vh;
+    font-family:var(--body);font-size:.78rem;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);text-decoration:none;
+    padding:.85em 1.6em;
+    border:.5px solid var(--rule);border-radius:999px;
+    transition:border-color .35s ease,color .35s ease,background-color .35s ease;
+  }
+  .deck-link:hover{
+    border-color:var(--accent);
+    background-color:rgba(201,138,75,.07);
+  }
+  .deck-link .arrow{
+    font-size:.95rem;letter-spacing:0;
+    transition:transform .35s ease;
+  }
+  .deck-link:hover .arrow{transform:translateX(3px);}
 
   /* ---- section heads ---- */
   .section{margin-top:11vh;}
@@ -87,23 +106,95 @@
   .ref a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--faint);}
   .ref a:hover{color:var(--accent);border-color:var(--accent);}
 
-  /* ---- weave placeholder ---- */
-  .weave-card{
-    border:.5px solid var(--rule);border-radius:12px;
-    padding:6vh 8vw;text-align:center;
+  /* ---- the weave ---- */
+  .weave-overture{
+    font-family:var(--display);font-weight:300;
+    font-size:clamp(1.05rem,2.3vw,1.26rem);line-height:1.62;
+    color:var(--ink);margin:0 auto;
   }
-  .weave-card .glyph{
-    font-size:1.5rem;color:var(--faint);letter-spacing:.5em;
-    margin-bottom:2.5vh;
+  .weave-overture .accent{color:var(--accent);font-style:italic;}
+  .weave-note{
+    font-family:var(--body);font-style:italic;
+    font-size:.93rem;line-height:1.62;color:var(--dim);
+    margin:4vh auto 0;padding-top:3vh;
+    border-top:.5px solid var(--rule);
   }
-  .weave-card p{
+  .weave-rule{
+    width:1px;height:clamp(2.4rem,5vw,3.6rem);
+    background:linear-gradient(180deg,var(--accent),transparent);
+    margin:5vh auto 0;opacity:.7;
+  }
+
+  /* movement headers */
+  .movement{
+    display:flex;align-items:baseline;gap:1rem;
+    margin:8vh 0 1vh;
+  }
+  .movement:first-of-type{margin-top:5vh;}
+  .movement .mvt-num{
     font-family:var(--display);font-style:italic;
-    font-size:1.2rem;color:var(--dim);line-height:1.5;
+    font-size:1.4rem;color:var(--accent);flex:none;
   }
-  .weave-card .small{
-    font-family:var(--body);font-style:normal;
-    font-size:.85rem;letter-spacing:.04em;color:var(--faint);
-    margin-top:3vh;
+  .movement .mvt-label{
+    font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--dim);flex:none;
+  }
+  .movement .mvt-span{flex:1;height:1px;background:var(--rule);}
+
+  /* the pairs */
+  .pair{
+    display:grid;grid-template-columns:2.1rem 1fr;
+    gap:0 1.2rem;
+    padding:4.2vh 0;
+    border-bottom:.5px solid var(--rule);
+  }
+  .pair:last-child{border-bottom:none;}
+  .pair-index{
+    font-family:var(--display);font-style:italic;
+    font-size:1.5rem;line-height:1;color:var(--faint);
+    padding-top:.15rem;
+  }
+  .pair-body{min-width:0;}
+  .pair-line{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(1.3rem,3vw,1.7rem);line-height:1.34;
+    color:var(--ink);
+  }
+  .pair-gloss{
+    font-family:var(--body);font-style:italic;
+    font-size:.96rem;line-height:1.58;color:var(--dim);
+    margin-top:1.4vh;padding-left:1rem;
+    border-left:1px solid rgba(201,138,75,.4);
+  }
+  .pair-weft{margin-top:2.2vh;padding-left:1rem;}
+  .pair-quote{
+    font-family:var(--display);font-weight:300;
+    font-size:clamp(1.04rem,2.2vw,1.2rem);line-height:1.56;
+    color:var(--ink);
+  }
+  .pair-quote::before{content:"\201C";color:var(--accent);margin-right:.06em;}
+  .pair-quote::after{content:"\201D";color:var(--accent);margin-left:.03em;}
+  .pair-quote.para{font-style:italic;color:#d8d3c7;}
+  .pair-quote.para::before,
+  .pair-quote.para::after{content:"";margin:0;}
+  .pair-quote.para em{font-style:normal;}
+  .pair-quote em{font-style:italic;}
+  .pair-cite{
+    display:block;font-family:var(--body);
+    font-size:.86rem;color:var(--accent);margin-top:1.3vh;
+  }
+  .pair-cite .work{font-style:italic;color:var(--ink);}
+
+  .weave-colophon{
+    font-family:var(--body);font-style:italic;
+    font-size:.92rem;line-height:1.62;color:var(--dim);
+    margin-top:6vh;padding-top:3vh;
+    border-top:.5px solid var(--rule);
+  }
+
+  @media (max-width:560px){
+    .pair{grid-template-columns:1.5rem 1fr;gap:0 .9rem;}
+    .pair-index{font-size:1.2rem;}
   }
 
   footer{
@@ -128,6 +219,7 @@
     <div class="kicker">Creation-Ship &middot; May 17, 2026</div>
     <h1><em>Relational</em><br>Poetics</h1>
     <p class="standfirst">A short practice in naming<br>what we tend, and letting it travel between us.</p>
+    <a class="deck-link" href="https://burmeister-j.github.io/relational-poetics/site.html" target="_blank" rel="noopener">Presentation Slides <span class="arrow" aria-hidden="true">&rarr;</span></a>
   </header>
 
 
@@ -162,14 +254,301 @@
 
   <!-- WEAVE -->
   <section class="section" id="weave">
-    <div class="section-kicker">Soon</div>
+    <div class="section-kicker">The braid</div>
     <h2>The Weave</h2>
-    <p class="section-note">The lines written in the room, gathered and braided<br>with the voices above.</p>
-    <div class="weave-card">
-      <div class="glyph">&middot; &middot; &middot;</div>
-      <p>A woven document from tonight's lines<br>will appear here in a few days.</p>
-      <p class="small">Patience is the practice. Return when it's ready.</p>
+
+    <p class="weave-overture">
+      On paper, we inscribed our care&mdash;and the felt-sense it potentiates.
+      That act carried something from the actual back into the virtual. This
+      weave let our shared <span class="accent">desire-as-care</span>, rather
+      than desire-as-lack, signal toward resonant language in the readings
+      gathered at this portal&rsquo;s opening. We are, and have always been,
+      in conversation with everyone who has ever been&mdash;their externalized
+      memories permeating the shared field of perception. The quality of
+      attention we bring to the dialogue affords us deeper and deeper
+      experience.
+    </p>
+    <p class="weave-note">
+      With apologies to anyone who was present and whose lines somehow did not
+      make it into the weave. Like digital compression eroding the quality of
+      a file, the lived haptic textures of being-with others can analogously
+      yield qualitative losses&mdash;even as we are wholly absorbed in the
+      gains of interpersonal presence.
+    </p>
+    <div class="weave-rule" aria-hidden="true"></div>
+
+    <!-- I -->
+    <div class="movement">
+      <span class="mvt-num">I</span>
+      <span class="mvt-label">The self, the body, presence</span>
+      <span class="mvt-span" aria-hidden="true"></span>
     </div>
+
+    <article class="pair">
+      <div class="pair-index">1</div>
+      <div class="pair-body">
+        <p class="pair-line">Relationship to my body&rsquo;s knowing&mdash;it feels boring and hard!</p>
+        <p class="pair-gloss">The boring is not the obstacle to the knowing. It may be where the knowing hatches.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">If sleep represents the high point of bodily relaxation, deep boredom is the peak of mental relaxation. A purely hectic rush produces nothing new.</p>
+          <span class="pair-cite">Byung-Chul Han, <span class="work">The Burnout Society</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">2</div>
+      <div class="pair-body">
+        <p class="pair-line">Myself&mdash;how to be present when I&rsquo;m in flow; tinkering, without judgement or expectation. Sometimes disappointed by little progress.</p>
+        <p class="pair-gloss">A reframe for &ldquo;little progress&rdquo;: stillness as its own intensity, not a failure of output.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">Inactivity has a logic of its own, its own language, temporality, architecture, magnificence&mdash;even its own magic. It is not a weakness or defect but rather an intensity.</p>
+          <span class="pair-cite">Byung-Chul Han, <span class="work">Vita Contemplativa</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">3</div>
+      <div class="pair-body">
+        <p class="pair-line">I am nurturing self-control and productivity. It feels like a constant struggle between the dark and the light forces within me.</p>
+        <p class="pair-gloss">Han names the struggle exactly: not dark against light, but a self at war with itself.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">No-longer-being-able-to-be-able leads to destructive self-reproach and auto-aggression. The achievement-subject finds itself fighting with itself.</p>
+          <span class="pair-cite">Byung-Chul Han, <span class="work">The Burnout Society</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">4</div>
+      <div class="pair-body">
+        <p class="pair-line">Love in every form. Intimate offline communities around every major project I do.</p>
+        <p class="pair-gloss">Love not as a single bond but an energy&mdash;in every form, around everything made.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">love isn&rsquo;t always a doorway to forever&mdash;sometimes it is a door to another love. Always it is an emergent process. Love is an energy of possibility: the possibility of wholeness.</p>
+          <span class="pair-cite">adrienne maree brown, <span class="work">Emergent Strategy</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">5</div>
+      <div class="pair-body">
+        <p class="pair-line">A values-aligned &ldquo;selfhood&rdquo; that is honest, humble, motivated, curious, unafraid&mdash;of failure, loss, rejection. It feels scary, exposing, possibly too late.</p>
+        <p class="pair-gloss">The padded suit promises safety. Benjamin says the braver move is to take it off.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">We can take off the hot, foam-padded suits we might wear in hopes of safety and belonging. We can transform the hostile environments that try to trap us.</p>
+          <span class="pair-cite">Ruha Benjamin, <span class="work">Imagination: A Manifesto</span></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- II -->
+    <div class="movement">
+      <span class="mvt-num">II</span>
+      <span class="mvt-label">Discipline, duty, what is hard</span>
+      <span class="mvt-span" aria-hidden="true"></span>
+    </div>
+
+    <article class="pair">
+      <div class="pair-index">6</div>
+      <div class="pair-body">
+        <p class="pair-line">My website. Empoweringly vulnerable.</p>
+        <p class="pair-gloss">A website is exactly this: you, present and exposed, while absent.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">users of correspondence marvel at its power to make the absent (especially the dear absent) present. In Greek antiquity, the term <em>parusia</em>&mdash;presence&mdash;was used about correspondence.</p>
+          <span class="pair-cite">J&eacute;r&ocirc;me Bourdon, <span class="work">Telepresence: Or, We Have Always Been Ghosts</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">7</div>
+      <div class="pair-body">
+        <p class="pair-line">Realigning a lived reality to an ideal. Feels like rebirth.</p>
+        <p class="pair-gloss">Not utopia, which is a dream&mdash;but the ideal built wide awake. Rebirth as waking.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">Whereas utopias are the stuff of dreams and dystopias the stuff of nightmares, <em>ustopias</em> are what we create together when we are wide awake.</p>
+          <span class="pair-cite">Ruha Benjamin, <span class="work">The New Artificial Intelligentsia</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">8</div>
+      <div class="pair-body">
+        <p class="pair-line">Trying to nurture patience and perseverance&mdash;feels difficult, and a bit like penance.</p>
+        <p class="pair-gloss">Perseverance toward people seven generations away. Patience as devotion&mdash;close to what &ldquo;penance&rdquo; reaches for.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">We cannot simply think of our survival; each new generation is responsible to ensure the survival of the seventh generation.</p>
+          <span class="pair-cite">Clarkson, Morrissette &amp; R&eacute;gallet, <span class="work">Our Responsibility to the Seventh Generation</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">9</div>
+      <div class="pair-body">
+        <p class="pair-line">Practice &rarr; self-care, nurturing. It feels unnatural, because I had been shut down with duties and responsibilities.</p>
+        <p class="pair-gloss">Why self-care feels unnatural: the knowledge of how to live, quietly short-circuited.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">These instruments, controlled by marketing, bypass and short-circuit the <em>savoir-vivre</em> of consumers, their knowledge of how to live.</p>
+          <span class="pair-cite">Bernard Stiegler, <span class="work">Automatic Society</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">10</div>
+      <div class="pair-body">
+        <p class="pair-line">I am nurturing eros, and it feels transpersonal to tend it.</p>
+        <p class="pair-gloss">For Han, Eros is precisely what pulls the self out of circling itself&mdash;the transpersonal turn.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">The self, thrown back on itself, begins to circle around itself in a worldless movement. Only Eros can defeat anxiety and depression.</p>
+          <span class="pair-cite">Byung-Chul Han, <span class="work">Vita Contemplativa</span></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- III -->
+    <div class="movement">
+      <span class="mvt-num">III</span>
+      <span class="mvt-label">Making, creating, becoming</span>
+      <span class="mvt-span" aria-hidden="true"></span>
+    </div>
+
+    <article class="pair">
+      <div class="pair-index">11</div>
+      <div class="pair-body">
+        <p class="pair-line">Fashion, creativity, Art. Liberating, Motivating.</p>
+        <p class="pair-gloss">Creativity as the liberating power to bring into presence what does not yet exist.</p>
+        <div class="pair-weft">
+          <p class="pair-quote para">Ada Lovelace described the imagination as that which conceives and brings into mental presence that which is far away, or invisible&mdash;a faculty she called God-like.</p>
+          <span class="pair-cite">Ada Lovelace, in Imogen Forbes-Macphail, <span class="work">Ada Lovelace&rsquo;s Poetical Science</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">12</div>
+      <div class="pair-body">
+        <p class="pair-line">Nurturing learning and putting myself out there. It feels good to get shit done.</p>
+        <p class="pair-gloss">Putting yourself out there as something other than being graded.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">what we wanted was to give writing a social role in a classroom, and thus to create a situation in which the writing was read by real readers.</p>
+          <span class="pair-cite">Russ Hunt, <span class="work">What is Inkshedding?</span></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- IV -->
+    <div class="movement">
+      <span class="mvt-num">IV</span>
+      <span class="mvt-label">Community, the collective</span>
+      <span class="mvt-span" aria-hidden="true"></span>
+    </div>
+
+    <article class="pair">
+      <div class="pair-index">13</div>
+      <div class="pair-body">
+        <p class="pair-line">I&rsquo;m nurturing community and building a sense of belonging. It feels hard and overwhelming.</p>
+        <p class="pair-gloss">&ldquo;Students&rdquo;&mdash;meaning no one arrives already fluent. The difficulty is the curriculum.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">reminding our species that we belong to this earth and to each other. We need to do the work of honestly engaging in community as students of belonging.</p>
+          <span class="pair-cite">adrienne maree brown, <span class="work">Loving Corrections</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">14</div>
+      <div class="pair-body">
+        <p class="pair-line">People endeavoring to bring people together in communities of practice. Feels like god&rsquo;s work&mdash;but should I do my own thing, or nothing?</p>
+        <p class="pair-gloss">A community of practice is learning-not-teaching made into a room. An answer to the doubt about whether the gathering matters.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">Creative, active individuals can only grow up in a society which emphasizes learning instead of teaching.</p>
+          <span class="pair-cite">Alexander, Ishikawa &amp; Silverstein, <span class="work">A Pattern Language</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">15</div>
+      <div class="pair-body">
+        <p class="pair-line">Intention, collective, coordinated, sequential action. Massive. Exciting. Curious how to make it happen.</p>
+        <p class="pair-gloss">A founding model of exactly this: intention turned into coordinated collective work.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">we are actively committed to struggling against racial, sexual, heterosexual, and class oppression, and see as our particular task the development of integrated analysis and practice.</p>
+          <span class="pair-cite"><span class="work">The Combahee River Collective Statement</span></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- V -->
+    <div class="movement">
+      <span class="mvt-num">V</span>
+      <span class="mvt-label">What we leave, where we are going</span>
+      <span class="mvt-span" aria-hidden="true"></span>
+    </div>
+
+    <article class="pair">
+      <div class="pair-index">16</div>
+      <div class="pair-body">
+        <p class="pair-line">What feeling do we leave behind with people&mdash;friend or stranger, or someone who disagrees? One of hope and kindness.</p>
+        <p class="pair-gloss">Aloha as the intelligence we meet people with&mdash;friend or stranger alike.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">Aloha is the intelligence with which we meet life.</p>
+          <span class="pair-cite">Olana Kaipo Ai, in <span class="work">Indigenous Protocol and Artificial Intelligence</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">17</div>
+      <div class="pair-body">
+        <p class="pair-line">Self-trust &rarr; nurtured in therapy.</p>
+        <p class="pair-gloss">Trust given&mdash;even to the self&mdash;is also trust that grows it.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">Trust is a seed that grows with attention and space. The facilitator can be a gardener, or the sun, the water.</p>
+          <span class="pair-cite">adrienne maree brown, <span class="work">Emergent Strategy</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">18</div>
+      <div class="pair-body">
+        <p class="pair-line">Navigate retirement life meaningfully. Uncertainty, with too many choices.</p>
+        <p class="pair-gloss">Later life as a full, settled stage with its own proper place&mdash;not a surplus of loose choices.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">Make certain that the full cycle of life is represented and balanced in each community. Set the ideal of a balanced life cycle as a principal guide.</p>
+          <span class="pair-cite">Alexander, Ishikawa &amp; Silverstein, <span class="work">A Pattern Language</span></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pair">
+      <div class="pair-index">19</div>
+      <div class="pair-body">
+        <p class="pair-line">Emotional safety. Navigating the ocean from a ship with sails.</p>
+        <p class="pair-gloss">Safety on the open water reframed as kinship&mdash;the wind and the ocean are kin, not threats. You are carried, not exposed.</p>
+        <div class="pair-weft">
+          <p class="pair-quote">ways of knowing and speaking that acknowledge kinship networks that extend to animal and plant, wind and rock, mountain and ocean.</p>
+          <span class="pair-cite">Lewis, Arista, Pechawis &amp; Kite, <span class="work">Indigenous Protocol and Artificial Intelligence</span></span>
+        </div>
+      </div>
+    </article>
+
+    <p class="weave-colophon">
+      Nineteen lines, anonymous, carried in each writer&rsquo;s own words. Each
+      passage was read in full against its source; quotation marks mark
+      verbatim text, unmarked italics a faithful, attributed compression. The
+      weave holds the room as it was&mdash;two responses, one hand, kept
+      company by a wider conversation.
+    </p>
+
+    <div class="rule"></div>
   </section>
 
 
